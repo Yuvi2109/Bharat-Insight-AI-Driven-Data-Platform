@@ -5,10 +5,6 @@ import {
   Shield, 
   Building2, 
   Calendar,
-  Settings,
-  Bell,
-  Lock,
-  LogOut,
   Camera
 } from 'lucide-react'
 import { useTenant } from '../../context/TenantContext'

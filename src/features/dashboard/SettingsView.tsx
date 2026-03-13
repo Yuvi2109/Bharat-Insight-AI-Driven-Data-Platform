@@ -2,20 +2,15 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Shield, 
-  Zap, 
   Cpu, 
-  Globe, 
   ChevronRight,
   Eye,
   Lock,
-  Bell,
   Palette,
   Settings
 } from 'lucide-react'
-import { useTenant } from '../../context/TenantContext'
 
 export default function SettingsView() {
-  const { department } = useTenant()
   const [activeSection, setActiveTab] = useState('General')
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
 

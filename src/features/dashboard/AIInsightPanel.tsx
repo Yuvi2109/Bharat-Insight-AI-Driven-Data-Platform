@@ -107,58 +107,74 @@ export default function AIInsightPanel({
   if (!isOpen) return null
 
   return (
-    <div className="w-80 border-l border-white/10 bg-[#0c0c0c] flex flex-col h-full shrink-0">
-      {/* Header */}
-      <div className="p-4 border-b border-white/10 flex justify-between items-center">
-        <div className="flex items-center gap-2 text-blue-400">
-          <Sparkles size={18} />
-          <span className="font-bold">AI Insights</span>
-        </div>
-        <button onClick={onClose} className="text-gray-500 hover:text-white"><X size={18} /></button>
-      </div>
-
-      {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
-        {messages.map((m, i) => (
-          <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[90%] p-3 rounded-lg text-xs leading-relaxed ${
-              m.role === 'user' ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-300 border border-white/5'
-            }`}>
-              {m.text || (loading && m.role === 'ai' ? '...' : '')}
-            </div>
+    <>
+      {/* Mobile Overlay Background */}
+      <div 
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[80] lg:hidden"
+        onClick={onClose}
+      />
+      
+      <div className={`
+        fixed inset-y-0 right-0 z-[90] w-full sm:w-80 md:w-96 lg:relative lg:w-80 lg:z-0
+        border-l border-white/10 bg-[#0c0c0c] flex flex-col h-full shrink-0
+        transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
+      `}>
+        {/* Header */}
+        <div className="p-4 border-b border-white/10 flex justify-between items-center">
+          <div className="flex items-center gap-2 text-blue-400">
+            <Sparkles size={18} />
+            <span className="font-bold">AI Insights</span>
           </div>
-        ))}
-        {loading && (
-          <div className="space-y-2">
-            <div className="text-blue-400 text-[10px] flex items-center gap-2 animate-pulse font-bold uppercase tracking-widest">
-              <Brain size={12} /> Reasoning State
-            </div>
-            <div className="text-gray-500 text-[10px] italic leading-tight bg-white/[0.02] p-2 rounded-lg border border-white/5">
-              Analyzing current grid filters, cross-referencing ministry context, and synthesizing response...
-            </div>
-          </div>
-        )}
-      </div>
+          <button onClick={onClose} className="text-gray-500 hover:text-white p-1"><X size={20} /></button>
+        </div>
 
-      {/* Input Area */}
-      <div className="p-4 border-t border-white/10">
-        <div className="flex gap-2">
-          <input 
-            className="flex-1 bg-white/5 border border-white/10 rounded px-3 py-2 text-xs text-white outline-none focus:border-blue-500"
-            placeholder="Type your question..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && askAI()}
-          />
-          <button 
-            onClick={askAI}
-            className="bg-blue-600 p-2 rounded hover:bg-blue-700 disabled:opacity-50"
-            disabled={loading}
-          >
-            <Send size={14} className="text-white" />
-          </button>
+        {/* Chat Area */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10">
+          {messages.map((m, i) => (
+            <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div className={`max-w-[90%] p-3 rounded-2xl text-xs leading-relaxed ${
+                m.role === 'user' 
+                  ? 'bg-blue-600 text-white rounded-tr-none shadow-lg shadow-blue-600/10' 
+                  : 'bg-white/5 text-gray-300 border border-white/5 rounded-tl-none'
+              }`}>
+                {m.text || (loading && m.role === 'ai' ? '...' : '')}
+              </div>
+            </div>
+          ))}
+          {loading && (
+            <div className="space-y-2 animate-in fade-in duration-300">
+              <div className="text-blue-400 text-[10px] flex items-center gap-2 animate-pulse font-bold uppercase tracking-widest">
+                <Brain size={12} /> Reasoning State
+              </div>
+              <div className="text-gray-500 text-[10px] italic leading-tight bg-white/[0.02] p-2 rounded-lg border border-white/5">
+                Analyzing current grid filters, cross-referencing ministry context, and synthesizing response...
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Input Area */}
+        <div className="p-4 border-t border-white/10 bg-black/20">
+          <div className="flex gap-2">
+            <input 
+              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white outline-none focus:border-blue-500 transition-colors"
+              placeholder="Type your question..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && askAI()}
+            />
+            <button 
+              onClick={askAI}
+              className="bg-blue-600 p-2.5 rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-all active:scale-95 shadow-lg shadow-blue-600/20"
+              disabled={loading}
+            >
+              <Send size={16} className="text-white" />
+            </button>
+          </div>
+          <p className="text-[9px] text-gray-600 mt-3 text-center uppercase tracking-widest font-medium">Powered by Gemini 1.5 Flash</p>
         </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -101,7 +101,7 @@ export default function DatasetsView() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-8 bg-[#030303] relative">
+    <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-[#030303] relative">
       {/* Premium Background Glow */}
       <motion.div 
         animate={{ 
@@ -111,19 +111,19 @@ export default function DatasetsView() {
           y: [0, -20, 0]
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/20 blur-[150px] rounded-full pointer-events-none"
+        className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-600/20 blur-[100px] md:blur-[150px] rounded-full pointer-events-none"
       />
 
       <motion.div 
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-4xl mb-12 relative z-10"
+        className="max-w-4xl mb-8 md:mb-12 relative z-10"
       >
         <motion.h2 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-white mb-2"
+          className="text-2xl md:text-3xl font-bold text-white mb-2"
         >
           Dataset Catalog
         </motion.h2>
@@ -131,7 +131,7 @@ export default function DatasetsView() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-gray-500"
+          className="text-xs md:text-sm text-gray-500"
         >
           Select a ministry to switch data context. Page speed optimized.
         </motion.p>
@@ -141,19 +141,19 @@ export default function DatasetsView() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative z-10"
       >
         {datasets.map((item) => (
           <motion.div 
             key={item.id}
             variants={itemAnim}
             whileHover={{ 
-              y: -10,
+              y: -5,
               transition: { duration: 0.3, ease: "easeOut" }
             }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setDepartment(item.id)}
-            className={`relative flex flex-col p-8 rounded-[2.5rem] border transition-all cursor-pointer group overflow-hidden ${
+            className={`relative flex flex-col p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border transition-all cursor-pointer group overflow-hidden ${
               department === item.id 
                 ? 'bg-white/[0.08] border-blue-500 shadow-[0_20px_50px_-12px_rgba(59,130,246,0.3)]' 
                 : 'bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]'
